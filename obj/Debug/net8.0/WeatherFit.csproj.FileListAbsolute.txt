@@ -111,3 +111,4 @@ C:\Applied Programming\WeatherFit\bin\Debug\net8.0\Microsoft.IdentityModel.Proto
 C:\Applied Programming\WeatherFit\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Applied Programming\WeatherFit\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Applied Programming\WeatherFit\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Applied Programming\WeatherFit\obj\Debug\net8.0\WeatherFit.sourcelink.json

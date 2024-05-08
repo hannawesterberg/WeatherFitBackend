@@ -59,10 +59,34 @@ namespace WeatherFit.Controllers
             return Ok(preference);
         }
 
-        /*
-        // POST: api/Preferences - Create POST method to add new preference
-        [HttpPost]
-        public ActionResult<Preferences> PostPreference(CreatePreferenceDto createPreferenceDto)
+        // POST: api/Preferences/{id} - Create POST method to add new preference for a user
+        [HttpPost("{id}")]
+        public ActionResult<Preferences> PostPreference(int id, CreatePreferenceDto createPreferenceDto)
+        {
+            // Check if the user exists in the database
+            var user = _context.Users.FirstOrDefault(u => u.User_Id == id);
+            if (user == null)
+            {
+                return NotFound($"User with ID {id} not found.");
+            }
+
+            // Create a new preference object linked to the user
+            var preference = new Preferences
+            {
+                User_Id = id, // Ensure the preference is linked to the user
+                Activity = createPreferenceDto.Activity,
+                Thermal_preference = createPreferenceDto.Thermal_preference
+            };
+
+            _context.Preferences.Add(preference);
+            _context.SaveChanges();
+
+            return CreatedAtAction("GetPreference", new { id = preference.Preference_Id }, preference);
+        } 
+
+        // OLD POST: api/Preferences - Create POST method to add new preference
+        /*[HttpPost]
+        public ActionResult<Preferences> PostPreference( CreatePreferenceDto createPreferenceDto)
         {
             var preference = new Preferences
             {
@@ -77,7 +101,7 @@ namespace WeatherFit.Controllers
             return CreatedAtAction("GetPreference", new { id = preference.Preference_Id }, preference);
         }
         */
-
+        /*
         [HttpPost]
         [Authorize]  // Ensure this method is protected by JWT authentication
         public ActionResult PostPreference(CreatePreferenceDto preferenceDto)
@@ -97,6 +121,7 @@ namespace WeatherFit.Controllers
 
             return CreatedAtAction(nameof(GetPreference), new { id = preference.Preference_Id }, preference);
         }
+        */
 
         // PUT: api/Preferences/5 - Create PUT method to update an existing preference
         [HttpPut("{id}")]

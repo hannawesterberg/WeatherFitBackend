@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeatherFit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22d93b040af4c4ec3189b42376a5ce561e0f1083")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0087177768451134c46bc10995c57a60521154eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeatherFit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeatherFit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
