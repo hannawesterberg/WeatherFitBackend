@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Linq;
+﻿using Newtonsoft.Json;
 using WeatherFit.Entities;
 
 public class WeatherService
@@ -14,7 +11,14 @@ public class WeatherService
         _httpClient = httpClient;
     }
 
-    // New method to get latitude and longitude
+    private class LocationResponse
+    {
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+     
+    }
+
+    //Method to convert city to lat & long using a geocoding web api 
     private async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string city)
     {
         string geocodingUrl = $"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={_apiKey}";
@@ -32,7 +36,7 @@ public class WeatherService
         throw new HttpRequestException("Geocoding failed, city not found");
     }
 
-    // Modified GetWeatherAsync method to use coordinates
+    // GetWeatherAsync method to get weather data from the city 
     public async Task<WeatherData> GetWeatherAsync(string city)
     {
         var (Latitude, Longitude) = await GetCoordinatesAsync(city);
@@ -40,27 +44,9 @@ public class WeatherService
         HttpResponseMessage weatherResponse = await _httpClient.GetAsync(weatherUrl);
         weatherResponse.EnsureSuccessStatusCode();
         var weatherData = JsonConvert.DeserializeObject<WeatherData>(await weatherResponse.Content.ReadAsStringAsync());
-        weatherData.City = city;  // Set the city name in your weather data
+        weatherData.City = city;  
         return weatherData;
-
-
-        /*
-        var (Latitude, Longitude) = await GetCoordinatesAsync(city);
-        string weatherUrl = $"https://api.openweathermap.org/data/2.5/weather?lat={Latitude}&lon={Longitude}&appid={_apiKey}";
-        HttpResponseMessage weatherResponse = await _httpClient.GetAsync(weatherUrl);
-        weatherResponse.EnsureSuccessStatusCode();
-        string weatherResponseBody = await weatherResponse.Content.ReadAsStringAsync();
-        weatherData.City = city;  // Set the city name in your weather data
-        return JsonConvert.DeserializeObject<WeatherData>(weatherResponseBody);
-        */
        
     }
-
-    // The LocationResponse class matches the JSON structure returned by the Geocoding API
-    private class LocationResponse
-    {
-        public double Lat { get; set; }
-        public double Lon { get; set; }
-        // ... include other fields as necessary
-    }
+    
 }

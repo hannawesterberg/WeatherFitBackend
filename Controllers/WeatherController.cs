@@ -1,9 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using WeatherFit;
-using WeatherFit;
+using Microsoft.AspNetCore.Mvc; //To access controllerbase to handle request and response 
 
 namespace WeatherFit.Controllers
 {
@@ -12,22 +7,20 @@ namespace WeatherFit.Controllers
 
     public class WeatherController : ControllerBase
     {
-        private readonly WeatherService _weatherService;
-
-        //constructor initiating _weatherservice
+        private readonly WeatherService _weatherService; 
 
         public WeatherController(WeatherService weatherService)
         {
             _weatherService = weatherService;
         }
 
-        //GET method to retrieve city
+        //GET: /api/Weather/{city} -  method to get the current weather in a city
         [HttpGet("{city}")]
         public async Task<IActionResult> GetWeatherByCity(string city)
         {
             try
             {
-                var weatherData = await _weatherService.GetWeatherAsync(city);
+                var weatherData = await _weatherService.GetWeatherAsync(city); //Calling on the method from Weather Service 
                 return Ok(weatherData);
             }
             catch (HttpRequestException ex)
@@ -37,7 +30,6 @@ namespace WeatherFit.Controllers
         }
 
     }
-
 
 }
 
